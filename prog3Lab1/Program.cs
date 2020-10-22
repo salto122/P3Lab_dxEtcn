@@ -1,49 +1,51 @@
 ﻿using System;
+using System.Linq;
 
-namespace prog3Lab1 {
-    public enum Mz {
-        Dwa,
-        Jedno,
-        Brak
-    }
+namespace lab3 {
+    internal class Program {
+        public static int[][] GenerateTable() {
+            var rand = new Random();
+            int[][] myTable = new int[rand.Next(2, 6)][];
 
-    class Program {
-        static void Main(string[] args) {
-            double a = 0, b = 0, c = 0;
+            for (int i = 0; i < myTable.Length; i++) {
+                myTable[i] = new int[rand.Next(2, 6)];
 
-            if (!double.TryParse(Console.ReadLine(), out a) ||
-                !double.TryParse(Console.ReadLine(), out b) ||
-                !double.TryParse(Console.ReadLine(), out c)) {
-                Console.WriteLine("Podano niepoprawne dane");
-                return;
+                for (int j = 0; j < myTable[i].Length; j++) {
+                    myTable[i][j] = rand.Next(0, 9);
+                    Console.Write(myTable[i][j]);
+                }
+
+                Console.WriteLine();
             }
 
-            double delta = (Math.Pow(b, 2) - 4 * a * c);
-            Console.WriteLine($"Delta: {delta}");
-            Mz iloscMiejsc;
+            return myTable;
+        }
 
-            if (delta > 0) {
-                iloscMiejsc = Mz.Dwa;
-            }
-            else if (delta == 0) {
-                iloscMiejsc = Mz.Jedno;
-            }
-            else {
-                iloscMiejsc = Mz.Brak;
+        public static int SumTable(int[][] myTable) {
+            int tableSum = 0;
+
+            for (int i = 0; i < myTable.GetLength(0); i++) {
+                tableSum += myTable[i].Sum();
             }
 
-            Console.WriteLine($"Ilość miejsc zerowych w tej delcie to: {iloscMiejsc}");
+            return tableSum;
+        }
 
-            switch (iloscMiejsc) {
-                case Mz.Dwa:
-                    Console.WriteLine($"x1: {((-b + Math.Sqrt(delta)) / 2 * a)}" +
-                                      $"\nx2: {((-b - Math.Sqrt(delta)) / 2 * a)}");
-                    break;
+        public static void TextValidator(string userInput) {
+            userInput = userInput.Remove(0, 1).Insert(0,
+                userInput.Substring(0, 1).ToUpper());
 
-                case Mz.Jedno:
-                    Console.WriteLine($"x1: {(-b / 2 * a)}");
-                    break;
+            if (userInput.Substring(userInput.Length - 1, 1) != ".") {
+                userInput = userInput.Insert(userInput.Length, ".");
             }
+
+            Console.WriteLine(userInput);
+        }
+
+        public static void Main(string[] args) {
+            Console.WriteLine("\n{0}", SumTable(GenerateTable()));
+
+            TextValidator(Console.ReadLine());
         }
     }
 }
