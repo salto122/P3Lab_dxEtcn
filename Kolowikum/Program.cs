@@ -30,7 +30,7 @@ namespace Kolowikum {
     
     class Program {
         static void Zuzycie(double U, double I, double T) {
-            Console.WriteLine($"Zużyto {U * I * T} kWh");
+            Console.WriteLine($"Zużyto {U * I * T} kWh \n");
         }
 
         static int CzyZawiera(string usrInput) {
@@ -45,7 +45,10 @@ namespace Kolowikum {
         
         static void Main(string[] args) {
             Zuzycie(10, 5, 8);
+            
             Console.WriteLine(CzyZawiera("test test ATH test test ATH test test ATH"));
+            Console.WriteLine(CzyZawiera("test test test test test test"));
+            Console.WriteLine();
             
             Reklama rek = new Reklama(18, 60, "test.com", true);
             Console.WriteLine(rek.Wyswietl());
