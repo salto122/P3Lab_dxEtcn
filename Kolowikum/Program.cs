@@ -6,7 +6,7 @@ namespace Kolowikum
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Helloo World!");
+            Console.WriteLine("Test test");
         }
     }
 }
