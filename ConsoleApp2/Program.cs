@@ -32,25 +32,24 @@ namespace ConsoleApp1
 
     class Program
     {
-        static void Main(string[] args)
-        {
-            Ksiazka[,,] spis = new Ksiazka[3, 6, 10];
-            
-            void FindBook(string userInput)
-            {
-                for (int i = 0; i < spis.GetLength(0); i++) {
-                    for (int j = 0; j < spis.GetLength(1); j++) {
-                        for (int k = 0; k < spis.GetLength(2); k++) {
-                            if (spis[i, j, k].Tytul.Contains(userInput) || spis[i, j, k].Tytul.Contains(userInput)) {
-                                Console.WriteLine("Tytuł: {0} Autor: {1} Regał: {2} Pułka: {3} Miejsce: {4}",
-                                    spis[i, j, k].Tytul, spis[i, j, k].Autor, spis[i, j, k].lok.NumerRegalu,
-                                    spis[i, j, k].lok.NumerPulki, spis[i, j, k].lok.NumerMiejsca);
-                            }
+        static void FindBook(string userInput, Ksiazka[,,] spis) {
+            for (int i = 0; i < spis.GetLength(0); i++) {
+                for (int j = 0; j < spis.GetLength(1); j++) {
+                    for (int k = 0; k < spis.GetLength(2); k++) {
+                        if (spis[i, j, k].Tytul.Contains(userInput) || spis[i, j, k].Tytul.Contains(userInput)) {
+                            Console.WriteLine("Tytuł: {0} Autor: {1} Regał: {2} Pułka: {3} Miejsce: {4}",
+                                spis[i, j, k].Tytul, spis[i, j, k].Autor, spis[i, j, k].lok.NumerRegalu,
+                                spis[i, j, k].lok.NumerPulki, spis[i, j, k].lok.NumerMiejsca);
                         }
                     }
                 }
             }
-
+        }
+        
+        static void Main(string[] args)
+        {
+            Ksiazka[,,] spis = new Ksiazka[3, 6, 10];
+            
             for (int i = 0; i < spis.GetLength(0); i++) {
                 for (int j = 0; j < spis.GetLength(1); j++) {
                     for (int k = 0; k < spis.GetLength(2); k++) {
@@ -67,7 +66,7 @@ namespace ConsoleApp1
             
             Console.Write("\nPodaj tytuł lub autora książki której szukasz: ");
             
-            FindBook(Console.ReadLine());
+            FindBook(Console.ReadLine(), spis);
         }
     }
 }
