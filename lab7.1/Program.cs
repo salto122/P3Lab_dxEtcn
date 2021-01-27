@@ -87,7 +87,7 @@ namespace lab7
                 Array.Clear(value.Tab, 0, value.Tab.Length);
             }
             
-            classesList.Sort((x, y) => x.TextField.CompareTo(y.TextField));
+            classesList.Sort();
             
             foreach (var value in classesList) {
                 value.Print();
