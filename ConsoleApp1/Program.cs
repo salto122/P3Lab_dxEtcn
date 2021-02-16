@@ -45,7 +45,6 @@ namespace ConsoleApp1
         public void SubskrybujKanal(Channel chnl) {
             chnl.SubujKanal();
             Console.WriteLine($"użytkownik {Nazwa} otrzymał powiadomienie o nowym filmie");
-            chnl.OpublikujFilm();
             chnl.OpublikowanoFilm += NowyFilm;
         }
 
@@ -53,11 +52,11 @@ namespace ConsoleApp1
             Id = id;
             Nazwa = nazwa;
         }
-
+        
         private void NowyFilm(object sender, EventArgs e) {
             Console.WriteLine("Opublikowano nowy film");
         }
-    }
+   }
 
     class Program
     {
