@@ -32,6 +32,30 @@ namespace S4L1
             updateExec.Parameters.Add(new SqlParameter("@ID", employeeId));
             updateExec.Parameters.Add(new SqlParameter("@NAME", employeeName));
             updateExec.ExecuteNonQuery();
+
+            Console.Write("Podaj ID zamowienia: ");
+            string orderId = Console.ReadLine();                 
+            
+            Console.Write("Podaj ID zamowienia: ");
+            string productId = Console.ReadLine();            
+            
+            Console.Write("Podaj cene: ");
+            string price = Console.ReadLine();
+            
+            Console.Write("Podaj ilosc: ");
+            string amount = Console.ReadLine();            
+            
+            Console.Write("Podaj rabat: ");
+            string discount = Console.ReadLine();
+            
+            var insertSql = $"INSERT INTO dbo.PozycjeZamówienia (IDproduktu, IDzamówienia, CenaJednostkowa, Ilość, Rabat) VALUES (@PRODUCTID, @ORDERID, @PRICE, @AMOUNT, @DISCOUNT)";
+            var insertExec = new SqlCommand(insertSql, connection);
+            insertExec.Parameters.Add(new SqlParameter("@PRODUCTID", productId));
+            insertExec.Parameters.Add(new SqlParameter("@ORDERID", orderId));
+            insertExec.Parameters.Add(new SqlParameter("@PRICE", price));
+            insertExec.Parameters.Add(new SqlParameter("@AMOUNT", amount));
+            insertExec.Parameters.Add(new SqlParameter("@DISCOUNT", discount));
+            insertExec.ExecuteNonQuery();            
             
             Console.Write("Podaj ID szukanego pracownika którego chcesz usunąć: ");
             employeeId = Console.ReadLine();
