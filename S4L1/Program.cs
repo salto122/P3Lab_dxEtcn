@@ -10,62 +10,41 @@ namespace S4L1
         static void Main(string[] args)
         {
             string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ZNorthwind;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;MultipleActiveResultSets=true";
+            DB db = new DB(connectionString);
             
-            using var connection = new SqlConnection(connectionString);
-            connection.Open();
-            
-            var queryString = "SELECT * FROM dbo.Pracownicy";
-            var command = new SqlCommand(queryString, connection);
-            var reader = command.ExecuteReader();
-            
-            foreach (DbDataRecord value in reader) {
-                Console.WriteLine(value.GetString(1) +  " " + value.GetString(2));
+            foreach (Pracownicy value in db.GetPracownicy()) {
+                Console.WriteLine(value.IDpracownika +  " " + value.Imię);
             }
             
             Console.Write("Podaj ID szukanego pracownika któremu chcesz zmienić imie: ");
-            string employeeId = Console.ReadLine();
+            int employeeId = Int32.Parse(Console.ReadLine());
             Console.Write("Podaj imie: ");
             string employeeName = Console.ReadLine();
-            
-            var updateSql = "UPDATE dbo.Pracownicy SET Imię = @NAME WHERE IDPracownika = @ID";
-            var updateExec = new SqlCommand(updateSql, connection);
-            updateExec.Parameters.Add(new SqlParameter("@ID", employeeId));
-            updateExec.Parameters.Add(new SqlParameter("@NAME", employeeName));
-            updateExec.ExecuteNonQuery();
+
+            db.UpdatePracownik(employeeId, employeeName);
 
             Console.Write("Podaj ID zamowienia: ");
-            string orderId = Console.ReadLine();                 
+            int orderId = Int32.Parse(Console.ReadLine());                 
             
             Console.Write("Podaj ID zamowienia: ");
-            string productId = Console.ReadLine();            
+            int productId = Int32.Parse(Console.ReadLine());            
             
             Console.Write("Podaj cene: ");
-            string price = Console.ReadLine();
+            int price = Int32.Parse(Console.ReadLine());
             
             Console.Write("Podaj ilosc: ");
-            string amount = Console.ReadLine();            
+            int amount = Int32.Parse(Console.ReadLine());            
             
             Console.Write("Podaj rabat: ");
-            string discount = Console.ReadLine();
-            
-            var insertSql = $"INSERT INTO dbo.PozycjeZamówienia (IDproduktu, IDzamówienia, CenaJednostkowa, Ilość, Rabat) VALUES (@PRODUCTID, @ORDERID, @PRICE, @AMOUNT, @DISCOUNT)";
-            var insertExec = new SqlCommand(insertSql, connection);
-            insertExec.Parameters.Add(new SqlParameter("@PRODUCTID", productId));
-            insertExec.Parameters.Add(new SqlParameter("@ORDERID", orderId));
-            insertExec.Parameters.Add(new SqlParameter("@PRICE", price));
-            insertExec.Parameters.Add(new SqlParameter("@AMOUNT", amount));
-            insertExec.Parameters.Add(new SqlParameter("@DISCOUNT", discount));
-            insertExec.ExecuteNonQuery();            
+            int discount = Int32.Parse(Console.ReadLine());
+
+            db.InsertZamowienie(productId, orderId, price, amount, discount);
+                    
             
             Console.Write("Podaj ID szukanego pracownika którego chcesz usunąć: ");
-            employeeId = Console.ReadLine();
-            
-            var deleteSql = $"DELETE FROM dbo.Pracownicy WHERE IDPracownika = @ID";
-            var deleteExec = new SqlCommand(deleteSql, connection);
-            deleteExec.Parameters.Add(new SqlParameter("@ID", employeeId));
-            deleteExec.ExecuteNonQuery();
-            
-            connection.Close();
+            employeeId = Int32.Parse(Console.ReadLine());
+
+            db.DeletePracownik(employeeId);
         }
     }
 }
