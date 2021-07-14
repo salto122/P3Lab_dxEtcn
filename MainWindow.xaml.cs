@@ -22,6 +22,8 @@ namespace WpfApp2
     {
         Scripts scripts = new Scripts();
         DB db = new DB();
+        bool isLogedIn = false;
+
         public MainWindow() {
             InitializeComponent();
         }
@@ -39,20 +41,21 @@ namespace WpfApp2
                 this.Title = "Błędne dane logowania";
             } else if (logState == 2)  {
                 LoginBackground.Background = (Brush)converter.ConvertFromString("#99FF9A");
-                this.Title = "Witaj " + loginName.Text;
+                
+                if(!isLogedIn) {
+                    this.Title = "Witaj " + loginName.Text;
 
-                foreach(Classes value in db.GetClasses()) {
-                    classList.Items.Add(value.Name);
+                    foreach (Classes value in db.GetClasses()){
+                        classList.Items.Add(value.Name);
+                    }
+
+                    isLogedIn = true;
                 }
             }
         }
 
-        public void SelectClass(object sender, EventArgs e) {
-            dataGrid.ItemsSource = db.GetGradesClass(classList.Items[classList.SelectedIndex].ToString());
-        }
-
         public void Search(object sender, EventArgs e) {
-            
+            dataGrid.ItemsSource = db.GetGradesClass(classList.Items[classList.SelectedIndex].ToString(), searchClass.Text, searchName.Text, searchSurname.Text);
         }
     }
 }

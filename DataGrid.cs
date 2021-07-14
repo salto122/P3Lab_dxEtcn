@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 namespace WpfApp2
 {
     class DataGrid {
+        public string Class { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
-        public string Class { get; set; }
         public string Grade { get; set; }
         public string Wage { get; set; }
+        public DateTime Date { get; set; }
     }
 }

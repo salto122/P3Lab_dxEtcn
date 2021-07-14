@@ -35,11 +35,34 @@ namespace WpfApp2
             }
         }
 
-        public IEnumerable<DataGrid> GetGradesClass(string selectedClass) {
+        public IEnumerable<DataGrid> GetGradesClass(string selectedClass = "", string searchClass = "", string searchName = "", string searchSurname = "") {
+            string statements = "";
+
+            if (selectedClass != "") {
+                statements += " AND Classes.Name = @CLASS";
+            }
+
+            if (searchClass != "") {
+                statements += " AND Users.Class = @SCLASS";
+            }
+
+            if (searchName != "") {
+                statements += " AND Users.Name = @NAME";
+            }
+
+            if (searchSurname != "") {
+                statements += " AND Users.Surname = @SURNAME";
+            }
+
             using (SqlConnection _connection = this.OpenConnection()) {
-                return _connection.Query<DataGrid>("SELECT Users.Class, Users.Name, Users.Surname, Classes.Name, Grade, Wage, Date FROM Users, Grades, Classes WHERE Grades.Student_ID = Users.ID AND Class_ID = Classes.ID AND Classes.Name = @CLASS",
+                return _connection.Query<DataGrid>("SELECT Users.Class, Users.Name, Users.Surname, Grade, Wage, Date " +
+                    "FROM Users, Grades, Classes " +
+                    "WHERE Grades.Student_ID = Users.ID AND Class_ID = Classes.ID" + statements,
                     new { 
-                        CLASS = selectedClass
+                        CLASS = selectedClass,
+                        SCLASS = searchClass,
+                        NAME = searchName,
+                        SURNAME = searchSurname
                     }
                 );
             }
