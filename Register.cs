@@ -50,10 +50,8 @@ namespace WindowsFormsApp1 {
         }
 
         static bool UserExists(string login) {
-            foreach (var value in User.Users) {
-                if (login == value.Username) {
-                    return true;
-                }
+            if(User.Users.Exists(x => x.Username.Contains(login))) {
+                return true;
             }
 
             return false;
