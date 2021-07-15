@@ -33,6 +33,22 @@ namespace WpfApp2
             using (SqlConnection _connection = this.OpenConnection()) {
                 return _connection.Query<Classes>("SELECT * FROM Classes");
             }
+        }        
+        
+        public IEnumerable<User> GetClass() {
+            using (SqlConnection _connection = this.OpenConnection()) {
+                return _connection.Query<User>("SELECT Class FROM Users WHERE Admin = 0 GROUP BY(Class)");
+            }
+        }        
+        
+        public IEnumerable<User> GetUsers(string optClass) {
+            using (SqlConnection _connection = this.OpenConnection()) {
+                return _connection.Query<User>("SELECT Name, Surname FROM Users WHERE Class = @CLASS",
+                    new {
+                        CLASS = optClass
+                    }
+                );
+            }
         }
 
         public IEnumerable<DataGrid> GetGradesClass(string selectedClass = "", string searchClass = "", string searchName = "", string searchSurname = "") {
@@ -63,6 +79,16 @@ namespace WpfApp2
                         SCLASS = searchClass,
                         NAME = searchName,
                         SURNAME = searchSurname
+                    }
+                );
+            }
+        }
+
+        public int AddGrade() {
+            using (SqlConnection _connection = this.OpenConnection()) {
+                return _connection.Execute("",
+                    new {
+
                     }
                 );
             }

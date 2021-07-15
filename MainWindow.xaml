@@ -11,15 +11,26 @@
             <TextBox x:Name="loginName" Height="23" TextWrapping="Wrap" Text="Adamek42" Width="120" Margin="15,15,0,10"/>
             <TextBox x:Name="passwordName" Height="23" TextWrapping="Wrap" Text="Test123" Width="120" Margin="15,0,0,0"/>
             <Button x:Name="loogin" Content="Login" Width="75" Margin="15,10,0,0" Click="Login"/>
+            <Button x:Name="logout" Content="X" Width="32" Margin="10,10,0,0" Height="20" FontWeight="Bold" Click="Logout"/>
         </WrapPanel>
         <WrapPanel HorizontalAlignment="Left" Height="419" VerticalAlignment="Top" Width="200" Background="#FF383838">
             <TextBlock x:Name="textBlock" TextWrapping="Wrap" Text="Lista przedmiotów" FontWeight="Bold" FontSize="18" FontFamily="Microsoft New Tai Lue" VerticalAlignment="Center" Width="160" Margin="20,10,0,0" Foreground="White"/>
             <ListBox x:Name="classList" Height="365" Width="180" Margin="10,10,0,0" Foreground="White" Background="#FF494949" FontSize="14" FontWeight="Bold" SelectionChanged="Search"/>
         </WrapPanel>
         <DataGrid x:Name="dataGrid" HorizontalAlignment="Left" Height="387" Margin="200,32,0,0" VerticalAlignment="Top" Width="449" IsSynchronizedWithCurrentItem="False"/>
-        <TextBox x:Name="searchClass" HorizontalAlignment="Left" Height="23" Margin="205,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70"/>
-        <TextBox x:Name="searchName" HorizontalAlignment="Left" Height="23" Margin="280,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="145"/>
-        <TextBox x:Name="searchSurname" HorizontalAlignment="Left" Height="23" Margin="430,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="145"/>
-        <Button x:Name="searchButton" Content="Button" HorizontalAlignment="Left" Margin="580,4,0,0" VerticalAlignment="Top" Width="69" Height="23" Click="Search"/>
+        <TextBox x:Name="searchClass" HorizontalAlignment="Left" Height="23" Margin="205,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" IsEnabled="False"/>
+        <TextBox x:Name="searchName" HorizontalAlignment="Left" Height="23" Margin="280,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="145" IsEnabled="False"/>
+        <TextBox x:Name="searchSurname" HorizontalAlignment="Left" Height="23" Margin="430,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="145" IsEnabled="False"/>
+        <Button x:Name="searchButton" Content="Button" HorizontalAlignment="Left" Margin="580,4,0,0" VerticalAlignment="Top" Width="64" Height="23" Click="Search" IsEnabled="False"/>
+        <WrapPanel x:Name="panel" HorizontalAlignment="Left" Height="311" Margin="649,0,0,0" VerticalAlignment="Top" Width="143" Background="#FF494949" Visibility="Hidden">
+            <ComboBox x:Name="panelClasses" Width="120" Margin="10,10,10,0" SelectionChanged="PanelSelectedClass"/>
+            <ComboBox x:Name="panelName" Width="120" Margin="10,10,10,0"/>
+            <ComboBox x:Name="panelClass" Width="120" Margin="10,10,10,0"/>
+            <TextBox x:Name="panelWage" Height="23" TextWrapping="Wrap" Text="" Width="55" Margin="10,10,0,0" PreviewTextInput="PreviewPanel"/>
+            <TextBox x:Name="panelGrade" Height="23" TextWrapping="Wrap" Text="" Width="55" Margin="10,10,0,0" PreviewTextInput="PreviewPanel"/>
+            <Button x:Name="panelAdd" Content="Dodaj ocenę" Width="120" Margin="10,10,10,0" Click="PanelAdd"/>
+            <Button x:Name="panelEdit" Content="Edytuj ocenę" Width="120" Margin="10,10,10,0"/>
+            <Button x:Name="panelDelete" Content="Usuń ocenę" Width="120" Margin="10,10,10,0"/>
+        </WrapPanel>
     </Grid>
 </Window>

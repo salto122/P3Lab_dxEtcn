@@ -9,12 +9,12 @@ namespace WpfApp2
     public class Scripts {
         DB db = new DB();
 
-        public int LoginUser(string login, string password) {
+        public bool LoginUser(string login, string password) {
             if(db.LoginUser(login, password).Count<User>() > 0) {
-                return (2);
+                return false;
             }
 
-            return 1;
+            return true;
         }
     }
 }

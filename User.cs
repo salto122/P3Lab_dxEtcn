@@ -29,5 +29,15 @@ namespace WpfApp2 {
             this.Login = Login;
             this.Class = Class;
         }
+
+        public User(System.String Class) {
+            this.Class = Class;
+        }
+
+        public User(System.String Name, System.String Surname) {
+            this.Name = Name;
+            this.Surname = Surname;
+
+        }
     }
 }
