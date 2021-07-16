@@ -24,32 +24,41 @@ namespace WpfApp2
         Scripts scripts = new Scripts();
         DB db = new DB();
         bool isLogedIn = false;
+        User user;
+        //int userID;
 
         public MainWindow() {
             InitializeComponent();
         }
 
         public void Login(object sender, EventArgs e) {
-            bool logState = scripts.LoginUser(loginName.Text, passwordName.Text);
+            //bool logState = scripts.LoginUser(loginName.Text, passwordName.Text);
+            user = db.LoginUser(loginName.Text, passwordName.Text);
+            Console.WriteLine(user);
             var converter = new System.Windows.Media.BrushConverter();
 
-            if (logState) {
+            if (user is null) {
                 LoginBackground.Background = (Brush)converter.ConvertFromString("#FFFFBBBB");
                 this.Title = "Błędne dane logowania";
             } else {
                 LoginBackground.Background = (Brush)converter.ConvertFromString("#99FF9A");
-                
+
                 if(!isLogedIn) {
                     this.Title = "Witaj " + loginName.Text;
+                    //userID = db.GetLogedData(loginName.Text, passwordName.Text);
 
                     foreach (Classes value in db.GetClasses()){
                         classList.Items.Add(value.Name);
                     }
 
-                    if (true) {     //IF ADMIN
+                    if (user.Admin) {
                         BarOperator(true);
                         panelClasses.ItemsSource = db.GetClass().Select(x => x.Class);
-                        panelClass.ItemsSource = db.GetClasses().Select(x => x.Name);
+                        panelClass.ItemsSource = db.GetClasses().Select(x => x.ID + " " + x.Name);
+                    } else {
+                        searchClass.Text = user.Class;
+                        searchName.Text = user.Name;
+                        searchSurname.Text = user.Surname;
                     }
 
                     isLogedIn = true;
@@ -83,7 +92,7 @@ namespace WpfApp2
         }
 
         private void PanelSelectedClass(object sender, RoutedEventArgs e) {
-            panelName.ItemsSource = db.GetUsers(panelClasses.SelectedItem.ToString()).Select(x => x.Name + " " + x.Surname);
+            panelName.ItemsSource = db.GetUsers(panelClasses.SelectedItem.ToString()).Select(x => x.ID + " " + x.Name + " " + x.Surname);
         }
 
         private void PreviewPanel(object sender, TextCompositionEventArgs e) {
@@ -92,7 +101,15 @@ namespace WpfApp2
         }
 
         private void PanelAdd(object sender, RoutedEventArgs e) {
-            db.AddGrade();
+            string studentID = panelName.SelectedItem.ToString().Split(' ').FirstOrDefault();
+            string classID = panelClass.SelectedItem.ToString().Split(' ').FirstOrDefault();
+            db.AddGrade(studentID, user.ID, classID, panelWage.Text, panelGrade.Text);
+            MessageBox.Show("Pomyślnie dodano ocenę");
+        }
+        private void GridChange(object sender, RoutedEventArgs e) {
+            DataGrid selectedGrid = dataGrid.SelectedItem as DataGrid;
+            Console.WriteLine(selectedGrid.Name);
+            
         }
 
     }

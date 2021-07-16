@@ -10,9 +10,9 @@ namespace WpfApp2
         DB db = new DB();
 
         public bool LoginUser(string login, string password) {
-            if(db.LoginUser(login, password).Count<User>() > 0) {
-                return false;
-            }
+            //if(db.LoginUser(login, password).Count<User>() > 0) {
+            //    return false;
+            //}
 
             return true;
         }

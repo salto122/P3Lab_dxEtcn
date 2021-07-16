@@ -34,7 +34,8 @@ namespace WpfApp2 {
             this.Class = Class;
         }
 
-        public User(System.String Name, System.String Surname) {
+        public User(System.Int32 ID, System.String Name, System.String Surname) {
+            this.ID = ID;
             this.Name = Name;
             this.Surname = Surname;
 

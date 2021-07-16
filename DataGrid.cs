@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace WpfApp2
 {
     class DataGrid {
+        public int ID { get; set; }
         public string Class { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }

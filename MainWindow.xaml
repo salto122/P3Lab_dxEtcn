@@ -17,7 +17,7 @@
             <TextBlock x:Name="textBlock" TextWrapping="Wrap" Text="Lista przedmiotów" FontWeight="Bold" FontSize="18" FontFamily="Microsoft New Tai Lue" VerticalAlignment="Center" Width="160" Margin="20,10,0,0" Foreground="White"/>
             <ListBox x:Name="classList" Height="365" Width="180" Margin="10,10,0,0" Foreground="White" Background="#FF494949" FontSize="14" FontWeight="Bold" SelectionChanged="Search"/>
         </WrapPanel>
-        <DataGrid x:Name="dataGrid" HorizontalAlignment="Left" Height="387" Margin="200,32,0,0" VerticalAlignment="Top" Width="449" IsSynchronizedWithCurrentItem="False"/>
+        <DataGrid x:Name="dataGrid" HorizontalAlignment="Left" Height="387" Margin="200,32,0,0" VerticalAlignment="Top" Width="449" IsSynchronizedWithCurrentItem="False" SelectionMode="Single" SelectionChanged="GridChange"/>
         <TextBox x:Name="searchClass" HorizontalAlignment="Left" Height="23" Margin="205,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" IsEnabled="False"/>
         <TextBox x:Name="searchName" HorizontalAlignment="Left" Height="23" Margin="280,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="145" IsEnabled="False"/>
         <TextBox x:Name="searchSurname" HorizontalAlignment="Left" Height="23" Margin="430,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="145" IsEnabled="False"/>

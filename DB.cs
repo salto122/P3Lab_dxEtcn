@@ -17,17 +17,17 @@ namespace WpfApp2
             return con;
         }
 
-        public IEnumerable<User> LoginUser(string login, string password) {
-            using (SqlConnection _connection = this.OpenConnection()) {
-                return _connection.Query<User>(
-                   "SELECT * FROM Users WHERE Login = @NAME AND Password = @PASSWORD",
-                   new {
-                       NAME = login,
-                       PASSWORD = password
-                   }
-               );
-            }
-        }
+        //public IEnumerable<User> LoginUser(string login, string password) {
+        //    using (SqlConnection _connection = this.OpenConnection()) {
+        //        return _connection.Query<User>(
+        //           "SELECT * FROM Users WHERE Login = @NAME AND Password = @PASSWORD",
+        //           new {
+        //               NAME = login,
+        //               PASSWORD = password
+        //           }
+        //       );
+        //    }
+        //}
 
         public IEnumerable<Classes> GetClasses() {
             using (SqlConnection _connection = this.OpenConnection()) {
@@ -43,7 +43,7 @@ namespace WpfApp2
         
         public IEnumerable<User> GetUsers(string optClass) {
             using (SqlConnection _connection = this.OpenConnection()) {
-                return _connection.Query<User>("SELECT Name, Surname FROM Users WHERE Class = @CLASS",
+                return _connection.Query<User>("SELECT ID, Name, Surname FROM Users WHERE Class = @CLASS",
                     new {
                         CLASS = optClass
                     }
@@ -71,7 +71,7 @@ namespace WpfApp2
             }
 
             using (SqlConnection _connection = this.OpenConnection()) {
-                return _connection.Query<DataGrid>("SELECT Users.Class, Users.Name, Users.Surname, Grade, Wage, Date " +
+                return _connection.Query<DataGrid>("SELECT Grades.ID, Users.Class, Users.Name, Users.Surname, Grade, Wage, Date " +
                     "FROM Users, Grades, Classes " +
                     "WHERE Grades.Student_ID = Users.ID AND Class_ID = Classes.ID" + statements,
                     new { 
@@ -84,13 +84,44 @@ namespace WpfApp2
             }
         }
 
-        public int AddGrade() {
+        public int AddGrade(string student, int teacher, string classes, string wage, string grade) {
             using (SqlConnection _connection = this.OpenConnection()) {
-                return _connection.Execute("",
+                return _connection.Execute("INSERT INTO Grades VALUES(@STUDENT, @TEACHER, @CLASS, @WAGE, @DATE, @GRADE)",
                     new {
-
+                        STUDENT = student,
+                        TEACHER = teacher,
+                        CLASS = classes,
+                        WAGE = wage,
+                        DATE = DateTime.Now,
+                        GRADE = grade
                     }
                 );
+            }
+        }
+
+        public int GetLogedData(string login, string password) {
+            using (SqlConnection _connection = this.OpenConnection()) {
+                return _connection.QueryFirstOrDefault<int>(
+                   "SELECT ID FROM Users WHERE Login = @NAME AND Password = @PASSWORD AND Admin = 1",
+                   new {
+                       NAME = login,
+                       PASSWORD = password
+                   }
+               );
+            }
+        }
+
+        public User LoginUser(string login, string password)
+        {
+            using (SqlConnection _connection = this.OpenConnection()) {
+                return _connection.QueryFirstOrDefault<User>(
+                   "SELECT * FROM Users WHERE Login = @NAME AND Password = @PASSWORD",
+                   new
+                   {
+                       NAME = login,
+                       PASSWORD = password
+                   }
+               );
             }
         }
     }
