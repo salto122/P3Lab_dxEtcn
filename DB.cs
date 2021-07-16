@@ -17,18 +17,6 @@ namespace WpfApp2
             return con;
         }
 
-        //public IEnumerable<User> LoginUser(string login, string password) {
-        //    using (SqlConnection _connection = this.OpenConnection()) {
-        //        return _connection.Query<User>(
-        //           "SELECT * FROM Users WHERE Login = @NAME AND Password = @PASSWORD",
-        //           new {
-        //               NAME = login,
-        //               PASSWORD = password
-        //           }
-        //       );
-        //    }
-        //}
-
         public IEnumerable<Classes> GetClasses() {
             using (SqlConnection _connection = this.OpenConnection()) {
                 return _connection.Query<Classes>("SELECT * FROM Classes");
@@ -111,17 +99,25 @@ namespace WpfApp2
             }
         }
 
-        public User LoginUser(string login, string password)
-        {
+        public User LoginUser(string login, string password) {
             using (SqlConnection _connection = this.OpenConnection()) {
                 return _connection.QueryFirstOrDefault<User>(
                    "SELECT * FROM Users WHERE Login = @NAME AND Password = @PASSWORD",
-                   new
-                   {
+                   new {
                        NAME = login,
                        PASSWORD = password
                    }
                );
+            }
+        }
+
+        public int DeleteGrade(int id) {
+            using (SqlConnection _connection = this.OpenConnection()) {
+                return _connection.Execute("DELETE FROM Grades WHERE ID = @ID",
+                    new {
+                       ID = id
+                    }
+                );
             }
         }
     }
